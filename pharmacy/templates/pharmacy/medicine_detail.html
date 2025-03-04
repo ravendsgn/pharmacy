@@ -1,0 +1,14 @@
+<!-- pharmacy/templates/pharmacy/medicine_detail.html -->
+<div class="card shadow-sm p-4">
+    <h2 class="text-primary mb-3">{{ medicine.name }}</h2>
+    <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item"><strong>Category:</strong> {{ medicine.category }}</li>
+        <li class="list-group-item"><strong>Price:</strong> ${{ medicine.price }}</li>
+        <li class="list-group-item"><strong>Stock:</strong> {{ medicine.stock }}</li>
+        <li class="list-group-item"><strong>Description:</strong> {{ medicine.description }}</li>
+    </ul>
+    <a href="{% url 'medicine_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to list
+    </a>
+</div>
+
