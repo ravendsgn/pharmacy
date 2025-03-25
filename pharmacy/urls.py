@@ -6,7 +6,11 @@ from .views import (
     MedicineCreateView,
     MedicineUpdateView,
     MedicineDeleteView,
+    APICreateView,
+    APIListView,
+    APIDeleteView
 )
+from rest_framework import serializers
 
 urlpatterns = [
     path('', MedicineListView.as_view(), name='medicine_list'),
@@ -14,4 +18,6 @@ urlpatterns = [
     path('medicine/new/', MedicineCreateView.as_view(), name='medicine_create'),
     path('medicine/<int:pk>/edit/', MedicineUpdateView.as_view(), name='medicine_update'),
     path('medicine/<int:pk>/delete/', MedicineDeleteView.as_view(), name='medicine_delete'),
+    path('create/',APICreateView.as_view()),
+    path('list/',APIListView.as_view())
 ]

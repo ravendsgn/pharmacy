@@ -3,12 +3,40 @@ from django.http import HttpResponse
 from django.views import View
 from .models import Medicine
 from .forms import MedicineForm
+from rest_framework import serializers
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
+from .serializer import Serializer
+from django.shortcuts import render
+from django.views import View
+from .models import Medicine
 
+class APIListView(ListAPIView):
+    queryset = Medicine.objects.all()
+    serializer_class = Serializer
 
+class APICreateView(CreateAPIView):
+    queryset = Medicine.objects.all()
+    serializer_class = Serializer
+
+class APIDeleteView(DestroyAPIView):
+    queryset = Medicine.objects.all()
+    serializer_class = Serializer
+    permission_classes = [IsAuthenticated]
 class MedicineListView(View):
     def get(self, request):
-        medicines = Medicine.objects.all()
-        return render(request, 'pharmacy/medicine_list.html', {'medicines': medicines})
+        query = request.GET.get('search')
+        if query:
+            medicines = Medicine.objects.filter(name__icontains=query)
+        else:
+            medicines = Medicine.objects.all()
+        return render(request, 'pharmacy/medicine_list.html', {'medicines': medicines, 'search_query': query})
+
+
+# class MedicineListView(View):
+#     def get(self, request):
+#         medicines = Medicine.objects.all()
+#         return render(request, 'pharmacy/medicine_list.html', {'medicines': medicines})
 
 
 class MedicineDetailView(View):
